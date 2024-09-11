@@ -1,3 +1,54 @@
 -> Pegar os dados do ticket de balança em PDF
 -> Usar os dados para preencher campos na planilha
 -> Retornar um arquivo em pdf, xlsx e criar opção de imprimir.
+
+
+
+
+
+
+
+
+# from openpyxl import Workbook
+#
+# # Cria uma nova planilha em branco
+# wb = Workbook()
+#
+# # Seleciona a planilha ativa
+# planilha = wb.active
+#
+# # Define o valor da célula A1
+# planilha['A1'] = 'Olá, Excel com Python!'
+#
+# # Salva o arquivo
+# wb.save('Exemplo.xlsx')
+
+
+# from openpyxl import load_workbook
+#
+# # Carrega o arquivo existente
+# wb = load_workbook('Exemplo.xlsx')
+#
+# # Seleciona a planilha ativa
+# planilha = wb.active
+#
+# # Lê o valor da célula A1
+# valor_celula = planilha['A1'].value
+#
+# # Imprime o valor na tela
+# print(valor_celula)
+
+
+# from openpyxl import load_workbook
+#
+# # Carrega o arquivo existente
+# wb = load_workbook('Exemplo.xlsx')
+#
+# # Seleciona a planilha ativa
+# planilha = wb.active
+#
+# # Atualiza o valor da célula A1
+# planilha['A1'] = 'Novo valor'
+#
+# # Salva o arquivo
+# wb.save('Exemplo.xlsx')
