@@ -1,13 +1,10 @@
-import os
 import pdfplumber
-
-curriculo = os.listdir()
-
-pdf = pdfplumber.open('estadia\CV Dev - Adriel (1).pdf')
-
+pdf = pdfplumber.open('estadia\TICKET 1.pdf')
 page = pdf.pages[0]
 text = page.extract_text()
-print(text.split('\n'))
-nome = text.split('\n')[0]
+# dataExtraida = text.split('\n')[4].split(' ')[2].replace('.', '/')
+hora = text.split('\n')[4].split(' ')[3].split(':')[0]
+minutos = text.split('\n')[4].split(' ')[3].split(':')[1]
 
-print('\nnome = '+ nome)
+
+print(hora +':'+ minutos)
