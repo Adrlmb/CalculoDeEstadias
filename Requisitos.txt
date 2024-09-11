@@ -1,0 +1,3 @@
+-> Pegar os dados do ticket de balança em PDF
+-> Usar os dados para preencher campos na planilha
+-> Retornar um arquivo em pdf, xlsx e criar opção de imprimir.
