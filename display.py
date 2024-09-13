@@ -101,9 +101,9 @@ class Application:
             planilha['C3'] = str(self.inputFornecedor.get())  # Fornecedor
             planilha['F4'] = str(self.inputCte.get())  # Ct-e
             planilha['F5'] = str(self.inputMotorista.get())  # Motorista
-            planilha['E16'] = str(self.inputMotivo.get())  # Motivo, vai se iniciar com "motivo:" e concatenar com o real motivo da estadia
+            planilha['E16'] = 'Motivo : ' + str(self.inputMotivo.get())  # Motivo, vai se iniciar com "motivo:" e concatenar com o real motivo da estadia
 
-            nome = nomeMotorista
+            nome = planilha['F5'].value
 
             if nome in ' ':
                 self.inputMotorista['bg'] = 'pink'
@@ -121,6 +121,14 @@ class Application:
         self.title["font"] = ("Calibri", "20", "bold")
         self.title.pack()
 
+        # Nome do Fornecedor
+        self.nomeFornecedor = Label(self.container2, text="Fornecedor ", font=self.fontePadrao)
+        self.nomeFornecedor.pack(side=LEFT)
+
+        self.inputFornecedor = Entry(self.container2)
+        self.inputFornecedor["width"] = 30
+        self.inputFornecedor["font"] = self.fontePadrao
+        self.inputFornecedor.pack(side=LEFT)
 
         # Transportadora
         self.transportadora = Label(self.container2, text="Transportadora ", font=self.fontePadrao)
@@ -131,85 +139,76 @@ class Application:
         self.inputTransportadora["font"] = self.fontePadrao
         self.inputTransportadora.pack(side=LEFT)
 
+        # Nome do Motorista
+        self.nomeMotorista = Label(self.container3, text="Nome do Motorista ", font=self.fontePadrao)
+        self.nomeMotorista.pack(side=LEFT)
 
-        # Número da NF
-        self.nf = Label(self.container3, text="Número da NF ", font=self.fontePadrao)
-        self.nf.pack(side=LEFT)
-        
-        self.inputNF = Entry(self.container3, textvariable=numeroNF)
-        self.inputNF["width"] = 30
-        self.inputNF["font"] = self.fontePadrao
-        self.inputNF.pack(side=LEFT)
+        self.inputMotorista = Entry(self.container3)
+        self.inputMotorista["width"] = 30
+        self.inputMotorista["font"] = self.fontePadrao
+        self.inputMotorista.pack(side=LEFT)
 
         # Nome do Produto
-        self.produto = Label(self.container4, text="Produto ", font=self.fontePadrao)
+        self.produto = Label(self.container3, text="Produto ", font=self.fontePadrao)
         self.produto.pack(side=LEFT)
 
-        self.inputProduto = Entry(self.container4, textvariable=nomeProduto)
+        self.inputProduto = Entry(self.container3, textvariable=nomeProduto)
         self.inputProduto["width"] = 30
         self.inputProduto["font"] = self.fontePadrao
         self.inputProduto.pack(side=LEFT)
 
-        # Peso da NF
-        self.pesoNF = Label(self.container5, text="Peso da NF ", font=self.fontePadrao)
-        self.pesoNF.pack(side=LEFT)
+        # Data e Hora de Chegada
+        self.dataHoraChegada = Label(self.container4, text="Data/Hora de Chegada (DD/MM/AAAA HH:MM) ",
+                                     font=self.fontePadrao)
+        self.dataHoraChegada.pack(side=LEFT)
 
-        self.inputPeso = Entry(self.container5, textvariable=pesoNF)
-        self.inputPeso["width"] = 30
-        self.inputPeso["font"] = self.fontePadrao
-        self.inputPeso.pack(side=LEFT)
+        self.inputDataHoraChegada = Entry(self.container4, textvariable=dataHoraChegada)
+        self.inputDataHoraChegada["width"] = 20
+        self.inputDataHoraChegada["font"] = self.fontePadrao
+        self.inputDataHoraChegada.pack(side=LEFT)
+
+        # Data e Hora de Saída
+        self.dataHoraSaida = Label(self.container4, text="Data/Hora de Saída ", font=self.fontePadrao)
+        self.dataHoraSaida.pack(side=LEFT)
+
+        self.inputDataHoraSaida = Entry(self.container4, textvariable=dataHoraSaida)
+        self.inputDataHoraSaida["width"] = 20
+        self.inputDataHoraSaida["font"] = self.fontePadrao
+        self.inputDataHoraSaida.pack(side=LEFT)
 
         # Número do CT-e
         self.numeroCTe = Label(self.container5, text="Número do CT-e ", font=self.fontePadrao)
         self.numeroCTe.pack(side=LEFT)
 
         self.inputCte = Entry(self.container5)
-        self.inputCte["width"] = 30
+        self.inputCte["width"] = 10
         self.inputCte["font"] = self.fontePadrao
         self.inputCte.pack(side=LEFT)
 
-        # Data e Hora de Chegada
-        self.dataHoraChegada = Label(self.container6, text="Data/Hora de Chegada (DD/MM/AAAA HH:MM) ", font=self.fontePadrao)
-        self.dataHoraChegada.pack(side=LEFT)
+        # Número da NF
+        self.nf = Label(self.container5, text="Número da NF ", font=self.fontePadrao)
+        self.nf.pack(side=LEFT)
 
-        self.inputDataHoraChegada = Entry(self.container6, textvariable= dataHoraChegada)
-        self.inputDataHoraChegada["width"] = 30
-        self.inputDataHoraChegada["font"] = self.fontePadrao
-        self.inputDataHoraChegada.pack(side=LEFT)
+        self.inputNF = Entry(self.container5, textvariable=numeroNF)
+        self.inputNF["width"] = 10
+        self.inputNF["font"] = self.fontePadrao
+        self.inputNF.pack(side=LEFT)
 
-        # Data e Hora de Saída
-        self.dataHoraSaida = Label(self.container6, text="Data/Hora de Saída ", font=self.fontePadrao)
-        self.dataHoraSaida.pack(side=LEFT)
+        # Peso da NF
+        self.pesoNF = Label(self.container5, text="Peso da NF ", font=self.fontePadrao)
+        self.pesoNF.pack(side=LEFT)
 
-        self.inputDataHoraSaida = Entry(self.container6, textvariable=dataHoraSaida)
-        self.inputDataHoraSaida["width"] = 30
-        self.inputDataHoraSaida["font"] = self.fontePadrao
-        self.inputDataHoraSaida.pack(side=LEFT)
-
-        # Nome do Fornecedor
-        self.nomeFornecedor = Label(self.container7, text="Fornecedor ", font=self.fontePadrao)
-        self.nomeFornecedor.pack(side=LEFT)
-
-        self.inputFornecedor = Entry(self.container7)
-        self.inputFornecedor["width"] = 30
-        self.inputFornecedor["font"] = self.fontePadrao
-        self.inputFornecedor.pack(side=LEFT)
-
-        # Nome do Motorista
-        self.nomeMotorista = Label(self.container8, text="Nome do Motorista ", font=self.fontePadrao)
-        self.nomeMotorista.pack(side=LEFT)
-
-        self.inputMotorista = Entry(self.container8)
-        self.inputMotorista["width"] = 30
-        self.inputMotorista["font"] = self.fontePadrao
-        self.inputMotorista.pack(side=LEFT)
+        self.inputPeso = Entry(self.container5, textvariable=pesoNF)
+        self.inputPeso["width"] = 10
+        self.inputPeso["font"] = self.fontePadrao
+        self.inputPeso.pack(side=LEFT)
 
         # Motivo da Estadia
         self.motivoEstadia = Label(self.container9, text="Motivo da Estadia ", font=self.fontePadrao)
         self.motivoEstadia.pack(side=LEFT)
 
         self.inputMotivo = Entry(self.container9)
-        self.inputMotivo["width"] = 30
+        self.inputMotivo["width"] = 60
         self.inputMotivo["font"] = self.fontePadrao
         self.inputMotivo.pack(side=LEFT)
 
