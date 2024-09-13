@@ -1,30 +1,18 @@
 from tkinter import *
+from tkinter import filedialog
 import pdfplumber
 from openpyxl.reader.excel import load_workbook
 
 
+
 class Application:
     def __init__(self, master=None):
+        def escolherPdf():
+            self.arquivo = filedialog.askopenfile(initialdir="/Desktop", title="Selecione um arquivo",
+                                                  filetypes=(("Arquivos PDF", "*.pdf"), ("Arquivos de texto", "*.txt")))
+            return str(self.arquivo).split('\u0027')[1]
 
-        wb = load_workbook('estadia\Cálculo estadia.xlsx')  # Carrega o arquivo existente
-        planilha = wb.active  # Seleciona a planilha ativa
-
-        pdf = pdfplumber.open('estadia\TICKET 1.pdf')
-        page = pdf.pages[0]
-        text = page.extract_text()
-
-        nomeTransportadora = StringVar()
-        numeroNF = IntVar()
-        nomeProduto = StringVar()
-        pesoNF = StringVar()
-        dataHoraSaida = StringVar()
-        dataHoraChegada = StringVar()
-        nomeFornecedor = StringVar()
-        numeroCte = IntVar()
-        nomeMotorista = StringVar()
-        motivoEstadia = StringVar()
-
-        def dataDeSaida():
+        def dataDeSaida(text):
             data = text.split('\n')[4].split(' ')[2].replace('.', '/')
             hora = text.split('\n')[4].split(' ')[3].split(':')[0]
             minutos = text.split('\n')[4].split(' ')[3].split(':')[1]
@@ -32,11 +20,15 @@ class Application:
             return data + ' ' + hora + ':' + minutos
 
         def msg():
+            pdf = pdfplumber.open(escolherPdf())
+            page = pdf.pages[0]
+            text = page.extract_text()
+
             nomeTransportadora.set(text.split('\n')[10].split('-')[1])
             numeroNF.set(int(text.split('\n')[7].split(':')[1]))
             nomeProduto.set(text.split('\n')[9].split('-')[1])
             pesoNF.set(text.split('\n')[5].split(": ")[1])
-            dataHoraSaida.set(dataDeSaida())
+            dataHoraSaida.set(dataDeSaida(text))
 
         def preencherPlanilha():
 
@@ -64,6 +56,21 @@ class Application:
             print(valor_celula)  # Imprime o valor na tela
 
             wb.save('EstadiasCalculadas\Estadia - ' + nome + '.xlsx')  # Salva a planilha com o nome Estadia + o nome do motorista
+
+        wb = load_workbook('estadia\Cálculo estadia.xlsx')  # Carrega o arquivo existente
+        planilha = wb.active  # Seleciona a planilha ativa
+
+        nomeTransportadora = StringVar()
+        numeroNF = IntVar()
+        nomeProduto = StringVar()
+        pesoNF = StringVar()
+        dataHoraSaida = StringVar()
+        dataHoraChegada = StringVar()
+        nomeFornecedor = StringVar()
+        numeroCte = IntVar()
+        nomeMotorista = StringVar()
+        motivoEstadia = StringVar()
+
 
         ###########################################################################################################
 
@@ -200,8 +207,8 @@ class Application:
         self.inputMotivo.pack(side=LEFT)
 
         # Button - Chama a função que extrai os campos do PDF
-        self.btnBuscar = Button(self.container7, text="Extrair dados do PDF", font=self.fontePadrao, width=20,
-                                command=msg)
+        self.btnBuscar = Button(self.container7, text="Importar PDF", font=self.fontePadrao, width=20,
+                                command= msg)
         self.btnBuscar.pack(side=LEFT)
 
         # Button - Chama a função que salva dados do input
