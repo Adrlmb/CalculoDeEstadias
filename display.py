@@ -7,10 +7,7 @@ from openpyxl.reader.excel import load_workbook
 
 class Application:
     def __init__(self, master=None):
-        def escolherPdf():
-            self.arquivo = filedialog.askopenfile(initialdir="/Desktop", title="Selecione um arquivo",
-                                                  filetypes=(("Arquivos PDF", "*.pdf"), ("Arquivos de texto", "*.txt")))
-            return str(self.arquivo).split('\u0027')[1]
+
 
         def dataDeSaida(text):
             data = text.split('\n')[4].split(' ')[2].replace('.', '/')
@@ -41,8 +38,7 @@ class Application:
             planilha['C3'] = str(self.inputFornecedor.get())  # Fornecedor
             planilha['F4'] = str(self.inputCte.get())  # Ct-e
             planilha['F5'] = str(self.inputMotorista.get())  # Motorista
-            planilha['E16'] = 'Motivo : ' + str(
-                self.inputMotivo.get())  # Motivo, vai se iniciar com "motivo:" e concatenar com o real motivo da estadia
+            planilha['E16'] = 'Motivo : ' + str(self.inputMotivo.get())  # Motivo, vai se iniciar com "motivo:" e concatenar com o real motivo da estadia
 
             nome = planilha['F5'].value
 
@@ -55,7 +51,19 @@ class Application:
             valor_celula = planilha['C3'].value  # Lê o valor da célula C3
             print(valor_celula)  # Imprime o valor na tela
 
+
             wb.save('EstadiasCalculadas\Estadia - ' + nome + '.xlsx')  # Salva a planilha com o nome Estadia + o nome do motorista
+
+        def escolherPdf():
+            self.pdf = filedialog.askopenfile(initialdir="/Desktop", title="Selecione um arquivo",
+                                                  filetypes=(
+                                                      ("Arquivos PDF", "*.pdf"), ("Arquivos de texto", "*.txt")))
+            return str(self.pdf).split('\u0027')[1]
+
+        # def salvarPlanilha():
+        #     self.planilhaExcel = filedialog.asksaveasfile(mode="w",initialdir="/Desktop", defaultextension= "xlsx", title="Salvar como", filetypes=(("Excel", "xlsx"), ("Arquivos de texto", "*.txt")))
+        #
+
 
         wb = load_workbook('estadia\Cálculo estadia.xlsx')  # Carrega o arquivo existente
         planilha = wb.active  # Seleciona a planilha ativa

@@ -3,13 +3,12 @@
 
 -> Pegar os dados do ticket de balança em PDF
 -> Usar os dados para preencher campos na planilha
--> Retornar um arquivo em pdf, xlsx e criar opção de imprimir.
+ - Concatenar Motivo + o motivo da estadia
 
 
 
                    A FAZER
-
- - Concatenar Motivo + o motivo da estadia
+-> Retornar um arquivo em pdf, xlsx e criar opção de imprimir.
  - Reduzir duplicidade
  - mudar para oop
  - alinhar campos no display
