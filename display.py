@@ -51,18 +51,18 @@ class Application:
             valor_celula = planilha['C3'].value  # Lê o valor da célula C3
             print(valor_celula)  # Imprime o valor na tela
 
-
-            wb.save('EstadiasCalculadas\Estadia - ' + nome + '.xlsx')  # Salva a planilha com o nome Estadia + o nome do motorista
+            #wb.save('EstadiasCalculadas\Estadia - ' + nome + '.xlsx')  # Salva a planilha com o nome Estadia + o nome do motorista
 
         def escolherPdf():
             self.pdf = filedialog.askopenfile(initialdir="/Desktop", title="Selecione um arquivo",
-                                                  filetypes=(
-                                                      ("Arquivos PDF", "*.pdf"), ("Arquivos de texto", "*.txt")))
+                                                  filetypes=[("Arquivos PDF", "*.pdf")]
             return str(self.pdf).split('\u0027')[1]
 
-        # def salvarPlanilha():
-        #     self.planilhaExcel = filedialog.asksaveasfile(mode="w",initialdir="/Desktop", defaultextension= "xlsx", title="Salvar como", filetypes=(("Excel", "xlsx"), ("Arquivos de texto", "*.txt")))
-        #
+        def salvarPlanilha():
+            self.planilhaExcel = filedialog.asksaveasfilename(mode="w",initialdir="/Desktop", defaultextension= ".xlsx", title="Salvar como", filetypes=[("Excel", "*.xlsx")]
+            wb.save(self.planilhaExcel)
+            if(self.planilhaExcel):
+                                                              
 
 
         wb = load_workbook('estadia\Cálculo estadia.xlsx')  # Carrega o arquivo existente
@@ -221,7 +221,7 @@ class Application:
 
         # Button - Chama a função que salva dados do input
         self.btnInput = Button(self.container7, text="Emitir Estadia", font=self.fontePadrao, width=20,
-                               command=preencherPlanilha)
+                               command=salvarPlanilha)
         self.btnInput.pack(side=RIGHT)
 
 
