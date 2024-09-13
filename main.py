@@ -1,7 +1,7 @@
 import pdfplumber
 from openpyxl import load_workbook
 
-pdf = pdfplumber.open('estadia\TICKET 1.pdf')
+pdf = pdfplumber.open('C:/Users/adrie/Downloads/TICKET 1.pdf')
 page = pdf.pages[0]
 text = page.extract_text()
 
