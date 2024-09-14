@@ -4,10 +4,8 @@ import pdfplumber
 from openpyxl.reader.excel import load_workbook
 
 
-
 class Application:
     def __init__(self, master=None):
-
 
         def dataDeSaida(text):
             data = text.split('\n')[4].split(' ')[2].replace('.', '/')
@@ -48,25 +46,27 @@ class Application:
             else:
                 self.inputMotorista['bg'] = 'white'
 
-            valor_celula = planilha['C3'].value  # Lê o valor da célula C3
-            print(valor_celula)  # Imprime o valor na tela
+            #wb.save('EstadiasCalculadas\Estadia - ' + nome + '.xlsx')  Salva a planilha automáticament com o nome Estadia + o nome do motorista
 
-            #wb.save('EstadiasCalculadas\Estadia - ' + nome + '.xlsx')  # Salva a planilha com o nome Estadia + o nome do motorista
+            self.planilha = filedialog.asksaveasfilename(initialdir="/Desktop", defaultextension=".xlsx",
+                                                         title="Salvar como", filetypes=[("Excel", "*.xlsx")])
+            wb.save(self.planilha)
+
 
         def escolherPdf():
-            self.pdf = filedialog.askopenfile(initialdir="/Desktop", title="Selecione um arquivo",
-                                                  filetypes=[("Arquivos PDF", "*.pdf")]
+            self.pdf = filedialog.askopenfile(initialdir="/Desktop", title="Selecione um arquivo", filetypes=[("Arquivos PDF", "*.pdf")])
             return str(self.pdf).split('\u0027')[1]
 
-        def salvarPlanilha():
-            self.planilhaExcel = filedialog.asksaveasfilename(mode="w",initialdir="/Desktop", defaultextension= ".xlsx", title="Salvar como", filetypes=[("Excel", "*.xlsx")]
-            wb.save(self.planilhaExcel)
-            if(self.planilhaExcel):
-                                                              
+        # def salvarPlanilha():
+        #     exportExcel = filedialog.asksaveasfilename(mode="w", initialdir="/Desktop", defaultextension=".xlsx",
+        #                                                       title="Salvar como", filetypes=[("Excel", "*.xlsx")]
+        #     wb.save(exportExcel)
+        #     if (exportExcel):
 
 
         wb = load_workbook('estadia\Cálculo estadia.xlsx')  # Carrega o arquivo existente
         planilha = wb.active  # Seleciona a planilha ativa
+
 
         nomeTransportadora = StringVar()
         numeroNF = IntVar()
@@ -79,8 +79,7 @@ class Application:
         nomeMotorista = StringVar()
         motivoEstadia = StringVar()
 
-
-        ###########################################################################################################
+        # -----------------------------------------------------------------------------------------
 
         self.fontePadrao = ("Arial", "10")
 
@@ -216,14 +215,13 @@ class Application:
 
         # Button - Chama a função que extrai os campos do PDF
         self.btnBuscar = Button(self.container7, text="Importar PDF", font=self.fontePadrao, width=20,
-                                command= msg)
+                                command=msg)
         self.btnBuscar.pack(side=LEFT)
 
         # Button - Chama a função que salva dados do input
         self.btnInput = Button(self.container7, text="Emitir Estadia", font=self.fontePadrao, width=20,
-                               command=salvarPlanilha)
+                               command=preencherPlanilha)
         self.btnInput.pack(side=RIGHT)
-
 
 root = Tk()
 Application(root)
