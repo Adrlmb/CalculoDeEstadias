@@ -42,3 +42,29 @@ wb.save('EstadiasCalculadas\Estadia - ' + planilha['F5'] + '.xlsx')  # Salva a p
 #   from aspose.cells import Workbook
 #   workbook = Workbook("input.xlsx")
 #   workbook.save("Output.pdf")
+
+
+
+
+import pdfplumber
+
+pdf = pdfplumber.open('estadia/TICKET 1.pdf')
+page = pdf.pages[0]
+text = page.extract_text()
+
+transportador = text.split('\n')[10].split('-')[1]
+numeroNF = int(text.split('\n')[7].split(':')[1])
+nomeProduto = text.split('\n')[9].split('-')[1]
+pesoNF = text.split('\n')[5].split(": ")[1]
+dataHoraSaida = ''
+
+campos = [transportador, numeroNF, nomeProduto, pesoNF, dataHoraSaida]
+
+while True:
+    for i in range(4):
+        if campos[i] is '':
+            input('Campo[' + i + '] = Falta digitar aí vacilão')
+    break
+
+print(transportador)
+# print(transportador, numeroNF,nomeProduto, pesoNF, dataHoraSaida)
