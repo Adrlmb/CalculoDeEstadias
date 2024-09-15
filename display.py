@@ -14,6 +14,10 @@ class Application:
 
             return data + ' ' + hora + ':' + minutos
 
+        def escolherPdf():
+            self.pdf = filedialog.askopenfile(initialdir="/Desktop", title="Selecione um arquivo", filetypes=[("Arquivos PDF", "*.pdf")])
+            return str(self.pdf).split('\u0027')[1]
+
         def msg():
             pdf = pdfplumber.open(escolherPdf())
             page = pdf.pages[0]
@@ -26,7 +30,6 @@ class Application:
             dataHoraSaida.set(dataDeSaida(text))
 
         def preencherPlanilha():
-
             planilha['F3'] = str(self.inputTransportadora.get())  # Transportador
             planilha['C4'] = str(self.inputNF.get())  # NF
             planilha['C5'] = str(self.inputProduto.get())  # Produto, impor condição se for Rocha!!
@@ -40,28 +43,21 @@ class Application:
 
             nome = planilha['F5'].value
 
+            salvarPlanilha(nome)
+
+        def salvarPlanilha(nome):
             if nome in ' ':
                 self.inputMotorista['bg'] = 'pink'
                 self.inputMotorista['text'] = 'Preencha todos os campos'
             else:
                 self.inputMotorista['bg'] = 'white'
 
-            #wb.save('EstadiasCalculadas\Estadia - ' + nome + '.xlsx')  Salva a planilha automáticament com o nome Estadia + o nome do motorista
 
-            self.planilha = filedialog.asksaveasfilename(initialdir="/Desktop", defaultextension=".xlsx",
+            self.planilha = filedialog.asksaveasfilename(initialdir="C:/Users/adrie/PycharmProjects/pythonProject1/EstadiasCalculadas", defaultextension=".xlsx",
                                                          title="Salvar como", filetypes=[("Excel", "*.xlsx")])
-            wb.save(self.planilha)
 
-
-        def escolherPdf():
-            self.pdf = filedialog.askopenfile(initialdir="/Desktop", title="Selecione um arquivo", filetypes=[("Arquivos PDF", "*.pdf")])
-            return str(self.pdf).split('\u0027')[1]
-
-        # def salvarPlanilha():
-        #     exportExcel = filedialog.asksaveasfilename(mode="w", initialdir="/Desktop", defaultextension=".xlsx",
-        #                                                       title="Salvar como", filetypes=[("Excel", "*.xlsx")]
-        #     wb.save(exportExcel)
-        #     if (exportExcel):
+            if self.planilha:
+                wb.save(self.planilha)
 
 
         wb = load_workbook('estadia\Cálculo estadia.xlsx')  # Carrega o arquivo existente
