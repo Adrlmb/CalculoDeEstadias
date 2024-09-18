@@ -93,7 +93,7 @@ class Application():
                 self.inputMotivo.get().upper())  # Motivo, vai se iniciar com "MOTIVO: " e concatenar com o real motivo da estadia
 
             salvarPlanilha(wb)
-            mensagemSalvo = "Estadia Salva com sucesso!"
+            mensagemSalvo = "Estadia salva com sucesso!"
             messagebox.showinfo('Aviso!', mensagemSalvo)
 
         def salvarPlanilha(wb):
