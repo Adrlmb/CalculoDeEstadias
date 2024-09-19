@@ -166,7 +166,9 @@ class Application():
             self.transportadora = Label(container2, text="Transportadora ", font=fontePadrao)
             self.transportadora.pack(side=LEFT)
 
-            self.inputTransportadora = Entry(container2, textvariable=nomeTransportadora, width=30, font=fontePadrao)
+            transportadorasCadastradas = ['FUTURO', 'G10', 'CARVALHO', 'FRIBON', 'D GRANEL', 'SIMOES BEBEDOURO', 'AGUETONI']
+
+            self.inputTransportadora = ttk.Combobox(container2, textvariable=nomeTransportadora, values=trasnportadorasCadastradas, width=30, font=fontePadrao)
             self.inputTransportadora.pack(side=LEFT)
 
             # Nome do Motorista
@@ -180,14 +182,13 @@ class Application():
             self.produto = Label(container3, text="Produto ", font=fontePadrao)
             self.produto.pack(side=LEFT)
 
-            listaProdutos = ['ROCHA UMA', 'ROCHA CMISS']
-            self.inputProduto = ttk.Combobox(container3, textvariable=nomeProduto, values=listaProdutos, width=30,
-                                             font=fontePadrao)
+            produtosCadastrados = ['ROCHA UMA', 'ROCHA CMISS', 'MICRO R P', 'KCL 00-00-58 F','KCL 00-00-58 GR','SSP 00-19-00','TSP 00-46-00 GR', 'MAP 11-52-00 F, 'KCL 00-00-60 GR IMP', 'CAL','MICRO HMoNi', 'ENXOFRE F IMP']
+            
+            self.inputProduto = ttk.Combobox(container3, textvariable=nomeProduto, values=produtodosCadastrados, width=30, font=fontePadrao)
             self.inputProduto.pack(side=LEFT)
 
             # Data e Hora de Chegada
-            self.dataHoraChegada = Label(container4, text="Data/Hora de Chegada ",
-                                         font=fontePadrao)
+            self.dataHoraChegada = Label(container4, text="Data/Hora de Chegada ",font=fontePadrao)
             self.dataHoraChegada.pack(side=LEFT)
 
             self.inputDataHoraChegada = Entry(container4, textvariable=dataHoraChegada, width=20, font=fontePadrao)
