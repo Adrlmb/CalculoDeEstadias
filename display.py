@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import filedialog, messagebox
+from tkinter import filedialog, messagebox, ttk
 import pdfplumber
 from openpyxl.reader.excel import load_workbook
 
@@ -93,8 +93,6 @@ class Application():
                 self.inputMotivo.get().upper())  # Motivo, vai se iniciar com "MOTIVO: " e concatenar com o real motivo da estadia
 
             salvarPlanilha(wb)
-            mensagemSalvo = "Estadia salva com sucesso!"
-            messagebox.showinfo('Aviso!', mensagemSalvo)
 
         def salvarPlanilha(wb):
             self.planilha = filedialog.asksaveasfilename(
@@ -146,7 +144,8 @@ class Application():
             self.container7["pady"] = 5
             self.container7.pack()
 
-            labels(self.container1,self.container2,self.container3,self.container4, self.container5 ,self.container6, self.fontePadrao)
+            labels(self.container1, self.container2, self.container3, self.container4, self.container5, self.container6,
+                   self.fontePadrao)
             buttons(self.container7, self.fontePadrao)
 
         def labels(container1, container2, container3, container4, container5, container6, fontePadrao):
@@ -159,92 +158,74 @@ class Application():
             self.nomeFornecedor = Label(container2, text="Fornecedor ", font=fontePadrao)
             self.nomeFornecedor.pack(side=LEFT)
 
-            self.inputFornecedor = Entry(container2, textvariable=nomeFornecedor)
+            self.inputFornecedor = Entry(container2, textvariable=nomeFornecedor, width=30, font=fontePadrao)
             self.inputFornecedor.focus()
-            self.inputFornecedor["width"] = 30
-            self.inputFornecedor["font"] = fontePadrao
             self.inputFornecedor.pack(side=LEFT)
 
             # Transportadora
             self.transportadora = Label(container2, text="Transportadora ", font=fontePadrao)
             self.transportadora.pack(side=LEFT)
 
-            self.inputTransportadora = Entry(container2, textvariable=nomeTransportadora)
-            self.inputTransportadora["width"] = 30
-            self.inputTransportadora["font"] = fontePadrao
+            self.inputTransportadora = Entry(container2, textvariable=nomeTransportadora, width=30, font=fontePadrao)
             self.inputTransportadora.pack(side=LEFT)
 
             # Nome do Motorista
             self.nomeMotorista = Label(container3, text="Nome do Motorista ", font=fontePadrao)
             self.nomeMotorista.pack(side=LEFT)
 
-            self.inputMotorista = Entry(container3, textvariable=nomeMotorista)
-            self.inputMotorista["width"] = 30
-            self.inputMotorista["font"] = fontePadrao
+            self.inputMotorista = Entry(container3, textvariable=nomeMotorista, width=30, font=fontePadrao)
             self.inputMotorista.pack(side=LEFT)
 
             # Nome do Produto
             self.produto = Label(container3, text="Produto ", font=fontePadrao)
             self.produto.pack(side=LEFT)
 
-            self.inputProduto = Entry(container3, textvariable=nomeProduto)
-            self.inputProduto["width"] = 30
-            self.inputProduto["font"] = fontePadrao
+            listaProdutos = ['ROCHA UMA', 'ROCHA CMISS']
+            self.inputProduto = ttk.Combobox(container3, textvariable=nomeProduto, values=listaProdutos, width=30,
+                                             font=fontePadrao)
             self.inputProduto.pack(side=LEFT)
 
             # Data e Hora de Chegada
-            self.dataHoraChegada = Label(container4, text="Data/Hora de Chegada (DD/MM/AAAA HH:MM) ",
+            self.dataHoraChegada = Label(container4, text="Data/Hora de Chegada ",
                                          font=fontePadrao)
             self.dataHoraChegada.pack(side=LEFT)
 
-            self.inputDataHoraChegada = Entry(container4, textvariable=dataHoraChegada)
-            self.inputDataHoraChegada["width"] = 20
-            self.inputDataHoraChegada["font"] = fontePadrao
+            self.inputDataHoraChegada = Entry(container4, textvariable=dataHoraChegada, width=20, font=fontePadrao)
             self.inputDataHoraChegada.pack(side=LEFT)
 
             # Data e Hora de Saída
             self.dataHoraSaida = Label(container4, text="Data/Hora de Saída ", font=fontePadrao)
             self.dataHoraSaida.pack(side=LEFT)
 
-            self.inputDataHoraSaida = Entry(container4, textvariable=dataHoraSaida)
-            self.inputDataHoraSaida["width"] = 20
-            self.inputDataHoraSaida["font"] = fontePadrao
+            self.inputDataHoraSaida = Entry(container4, textvariable=dataHoraSaida, width=20, font=fontePadrao)
             self.inputDataHoraSaida.pack(side=LEFT)
 
             # Número do CT-e
             self.numeroCTe = Label(container5, text="Número do CT-e ", font=fontePadrao)
             self.numeroCTe.pack(side=LEFT)
 
-            self.inputCte = Entry(container5, textvariable=numeroCte)
-            self.inputCte["width"] = 10
-            self.inputCte["font"] = fontePadrao
+            self.inputCte = Entry(container5, textvariable=numeroCte, width=10, font=fontePadrao)
             self.inputCte.pack(side=LEFT)
 
             # Número da NF
             self.nf = Label(container5, text="Número da NF ", font=fontePadrao)
             self.nf.pack(side=LEFT)
 
-            self.inputNF = Entry(container5, textvariable=numeroNF)
-            self.inputNF["width"] = 10
-            self.inputNF["font"] = fontePadrao
+            self.inputNF = Entry(container5, textvariable=numeroNF, width=10, font=fontePadrao)
             self.inputNF.pack(side=LEFT)
 
             # Peso da NF
             self.pesoNF = Label(container5, text="Peso da NF ", font=fontePadrao)
             self.pesoNF.pack(side=LEFT)
 
-            self.inputPeso = Entry(container5, textvariable=pesoNF)
-            self.inputPeso["width"] = 10
-            self.inputPeso["font"] = fontePadrao
+            self.inputPeso = Entry(container5, textvariable=pesoNF, width=10, font=fontePadrao)
             self.inputPeso.pack(side=LEFT)
 
             # Motivo da Estadia
             self.motivoEstadia = Label(container6, text="Motivo da Estadia ", font=fontePadrao)
             self.motivoEstadia.pack(side=LEFT)
 
-            self.inputMotivo = Entry(container6, textvariable=motivoEstadia)
-            self.inputMotivo["width"] = 60
-            self.inputMotivo["font"] = fontePadrao
+            self.inputMotivo = Entry(container6, textvariable=motivoEstadia, width=60, font=fontePadrao)
             self.inputMotivo.pack(side=LEFT)
 
         def buttons(container7, fontePadrao):
