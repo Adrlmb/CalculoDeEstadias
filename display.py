@@ -167,6 +167,7 @@ class Application():
             self.transportadora.pack(side=LEFT)
 
             transportadorasCadastradas = ['FUTURO', 'G10', 'CARVALHO', 'FRIBON', 'D GRANEL', 'SIMOES BEBEDOURO', 'AGUETONI']
+            trasnportadorasCadastradas.sort()
 
             self.inputTransportadora = ttk.Combobox(container2, textvariable=nomeTransportadora, values=trasnportadorasCadastradas, width=30, font=fontePadrao)
             self.inputTransportadora.pack(side=LEFT)
@@ -182,8 +183,8 @@ class Application():
             self.produto = Label(container3, text="Produto ", font=fontePadrao)
             self.produto.pack(side=LEFT)
 
-            produtosCadastrados = ['ROCHA UMA', 'ROCHA CMISS', 'MICRO R P', 'KCL 00-00-58 F','KCL 00-00-58 GR','SSP 00-19-00','TSP 00-46-00 GR', 'MAP 11-52-00 F, 'KCL 00-00-60 GR IMP', 'CAL','MICRO HMoNi', 'ENXOFRE F IMP']
-            
+            produtosCadastrados = ['ROCHA UMA', 'ROCHA CMISS', 'MICRO R P', 'KCL 00-00-58 F','KCL 00-00-58 GR','SSP 00-19-00','TSP 00-46-00 GR', 'MAP 11-52-00 F', 'KCL 00-00-60 GR IMP', 'CAL','MICRO HMoNi', 'ENXOFRE F IMP']
+            produtosCadastrados.sort()
             self.inputProduto = ttk.Combobox(container3, textvariable=nomeProduto, values=produtodosCadastrados, width=30, font=fontePadrao)
             self.inputProduto.pack(side=LEFT)
 
