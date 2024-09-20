@@ -37,7 +37,7 @@ class Application():
                     return 'Escolha o tipo de rocha'
 
         def formatarTransportadora(nome):
-            transportadoras = ['FUTURO LOGISTICA', 'G10 TRANSPORTES', 'CARVALHO TRANSPORTES', 'FRIBON TRANSPORTES', 'D GRANEL TRANSPORTES', 'SIMOES BEBEDOURO',
+            transportadoras = ['FUTURO LOGISTICA', 'G10 TRANSPORTES', 'CARVALHO TRANSPORTES', 'FRIBON TRANSPORTES', 'D\u0027GRANEL TRANSPORTES', 'SIMOES BEBEDOURO',
                                'AGUETONI TRANSPORTES']
 
             nome = nome[0:3]
