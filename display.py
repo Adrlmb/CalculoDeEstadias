@@ -20,14 +20,42 @@ class Application():
             if self.pdf:
                 return str(self.pdf).split('\u0027')[1]
 
+        def formatarProduto(nome):
+            produtos = ['ROCHA UMA', 'ROCHA CMISS', 'MICRO R P', 'KCL 00-00-58 F', 'KCL 00-00-58 GR',
+                                   'SSP 00-19-00', 'TSP 00-46-00 GR', 'MAP 11-52-00 F', 'KCL 00-00-60 GR IMP', 'CAL',
+                                   'MICRO HMoNi', 'ENXOFRE F IMP']
+
+            nome = nome[0:3]
+
+            # VERIFICAR O CÓDIGO DO PRODUTO DA ROCHA CMISS E UMA PRA PODER DIFERENCIAR NO IF
+
+            for i in range(len(produtos)):
+                if nome in produtos[i]:
+                    return produtos[i]
+                if nome in 'CON':
+                    return 'Escolha o tipo de rocha'
+
+        def formatarTransportadora(nome):
+            transportadoras = ['FUTURO LOGISTICA', 'G10 TRANSPORTES', 'CARVALHO TRANSPORTES', 'FRIBON TRANSPORTES', 'D GRANEL TRANSPORTES', 'SIMOES BEBEDOURO',
+                               'AGUETONI TRANSPORTES']
+
+            nome = nome[0:3]
+
+            for i in range(len(transportadoras)):
+                if nome in transportadoras[i]:
+                    return transportadoras[i]
+
         def importarPdf():
             pdf = pdfplumber.open(escolherPdf())
             page = pdf.pages[0]
             text = page.extract_text()
 
-            nomeTransportadora.set(text.split('\n')[10].split('-')[1])
+            transportadoraFormatada = formatarTransportadora(text.split('\n')[10].split('-')[1])
+            produtoFormatado = formatarProduto(text.split('\n')[9].split('-')[1])
+
+            nomeTransportadora.set(transportadoraFormatada)
+            nomeProduto.set(produtoFormatado)
             numeroNF.set(text.split('\n')[7].split(':')[1])
-            nomeProduto.set(text.split('\n')[9].split('-')[1])
             pesoNF.set(text.split('\n')[5].split(": ")[1])
             dataHoraSaida.set(dataDeSaida(text))
 
@@ -47,17 +75,16 @@ class Application():
 
         def conferenciaDeDados():
 
-            campoTransportadora = str(self.inputTransportadora.get().upper())
-            campoNumeroNF = str(self.inputNF.get())  # NF
-            campoProduto = str(self.inputProduto.get().upper())  # Produto, impor condição se for Rocha!!
-            campoPesoNF = str(self.inputPeso.get())  # Peso NF com vírgula
-            campoSaida = str(self.inputDataHoraSaida.get())  # Data e Hora da saída no formato DD/MM/AA HH:MM
-            campoEntrada = str(self.inputDataHoraChegada.get())  # Data e Hora de chegada no formato DD/MM/AA HH:MM
-            campoFornecedor = str(self.inputFornecedor.get().upper())  # Fornecedor
-            campoCte = str(self.inputCte.get())  # Ct-e
-            campoMotorista = str(self.inputMotorista.get().upper())  # Motorista
-            campoMotivos = str(
-                self.inputMotivo.get().upper())  # Motivo, vai se iniciar com "MOTIVO: " e concatenar com o real motivo da estadia
+            campoTransportadora = self.inputTransportadora.get().upper()
+            campoNumeroNF = self.inputNF.get()  # NF
+            campoProduto = self.inputProduto.get().upper()  # Produto, impor condição se for Rocha!!
+            campoPesoNF = self.inputPeso.get()  # Peso NF com vírgula
+            campoSaida = self.inputDataHoraSaida.get()  # Data e Hora da saída no formato DD/MM/AA HH:MM
+            campoEntrada = self.inputDataHoraChegada.get()  # Data e Hora de chegada no formato DD/MM/AA HH:MM
+            campoFornecedor = self.inputFornecedor.get().upper()  # Fornecedor
+            campoCte = self.inputCte.get()  # Ct-e
+            campoMotorista = self.inputMotorista.get().upper()  # Motorista
+            campoMotivos = self.inputMotivo.get().upper()  # Motivo, vai se iniciar com "MOTIVO: " e concatenar com o real motivo da estadia
 
             campos = [campoFornecedor, campoTransportadora, campoMotorista, campoProduto, campoEntrada, campoSaida,
                       campoCte, campoNumeroNF, campoPesoNF, campoMotivos]
@@ -80,17 +107,17 @@ class Application():
             planilha = wb.active  # Seleciona a planilha ativa
 
             # Pega os dados dos inputs e coloca na planilha de acordo com a célula referenciada
-            planilha['F3'] = str(self.inputTransportadora.get().upper())  # Transportador
+            planilha['F3'] = self.inputTransportadora.get().upper()  # Transportador
             planilha['C4'] = int(self.inputNF.get())  # NF
-            planilha['C5'] = str(self.inputProduto.get().upper())  # Produto, impor condição se for Rocha!!
-            planilha['F12'] = str(self.inputPeso.get())  # Peso NF com vírgula
-            planilha['B15'] = str(self.inputDataHoraSaida.get())  # Data e Hora da saída no formato DD/MM/AA HH:MM
-            planilha['B9'] = str(self.inputDataHoraChegada.get())  # Data e Hora de chegada no formato DD/MM/AA HH:MM
-            planilha['C3'] = str(self.inputFornecedor.get().upper())  # Fornecedor
-            planilha['F4'] = str(self.inputCte.get())  # Ct-e
-            planilha['F5'] = str(self.inputMotorista.get().upper())  # Motorista
-            planilha['E16'] = 'MOTIVO: ' + str(
-                self.inputMotivo.get().upper())  # Motivo, vai se iniciar com "MOTIVO: " e concatenar com o real motivo da estadia
+            planilha['C5'] = self.inputProduto.get().upper()  # Produto, impor condição se for Rocha!!
+            planilha['F12'] = self.inputPeso.get()  # Peso NF com vírgula
+            planilha['B15'] = self.inputDataHoraSaida.get()  # Data e Hora da saída no formato DD/MM/AA HH:MM
+            planilha['B9'] = self.inputDataHoraChegada.get()  # Data e Hora de chegada no formato DD/MM/AA HH:MM
+            planilha['C3'] = self.inputFornecedor.get().upper()  # Fornecedor
+            planilha['F4'] = self.inputCte.get()  # Ct-e
+            planilha['F5'] = self.inputMotorista.get().upper()  # Motorista
+            planilha[
+                'E16'] = 'MOTIVO: ' + self.inputMotivo.get().upper()  # Motivo, vai se iniciar com "MOTIVO: " e concatenar com o real motivo da estadia
 
             salvarPlanilha(wb)
 
@@ -162,15 +189,19 @@ class Application():
             self.inputFornecedor.focus()
             self.inputFornecedor.pack(side=LEFT)
 
+
             # Transportadora
             self.transportadora = Label(container2, text="Transportadora ", font=fontePadrao)
             self.transportadora.pack(side=LEFT)
 
-            transportadorasCadastradas = ['FUTURO', 'G10', 'CARVALHO', 'FRIBON', 'D GRANEL', 'SIMOES BEBEDOURO', 'AGUETONI']
-            trasnportadorasCadastradas.sort()
+            transportadorasCadastradas = ['FUTURO', 'G10', 'CARVALHO', 'FRIBON', 'D GRANEL', 'SIMOES BEBEDOURO',
+                                          'AGUETONI']
+            transportadorasCadastradas.sort()
 
-            self.inputTransportadora = ttk.Combobox(container2, textvariable=nomeTransportadora, values=trasnportadorasCadastradas, width=30, font=fontePadrao)
+            self.inputTransportadora = ttk.Combobox(container2, textvariable=nomeTransportadora,
+                                                    values=transportadorasCadastradas, width=30, font=fontePadrao)
             self.inputTransportadora.pack(side=LEFT)
+
 
             # Nome do Motorista
             self.nomeMotorista = Label(container3, text="Nome do Motorista ", font=fontePadrao)
@@ -179,21 +210,27 @@ class Application():
             self.inputMotorista = Entry(container3, textvariable=nomeMotorista, width=30, font=fontePadrao)
             self.inputMotorista.pack(side=LEFT)
 
+
             # Nome do Produto
             self.produto = Label(container3, text="Produto ", font=fontePadrao)
             self.produto.pack(side=LEFT)
 
-            produtosCadastrados = ['ROCHA UMA', 'ROCHA CMISS', 'MICRO R P', 'KCL 00-00-58 F','KCL 00-00-58 GR','SSP 00-19-00','TSP 00-46-00 GR', 'MAP 11-52-00 F', 'KCL 00-00-60 GR IMP', 'CAL','MICRO HMoNi', 'ENXOFRE F IMP']
+            produtosCadastrados = ['ROCHA UMA', 'ROCHA CMISS', 'MICRO R P', 'KCL 00-00-58 F', 'KCL 00-00-58 GR',
+                                   'SSP 00-19-00', 'TSP 00-46-00 GR', 'MAP 11-52-00 F', 'KCL 00-00-60 GR IMP', 'CAL',
+                                   'MICRO HMoNi', 'ENXOFRE F IMP']
             produtosCadastrados.sort()
-            self.inputProduto = ttk.Combobox(container3, textvariable=nomeProduto, values=produtodosCadastrados, width=30, font=fontePadrao)
+            self.inputProduto = ttk.Combobox(container3, textvariable=nomeProduto, values=produtosCadastrados, width=30,
+                                             font=fontePadrao)
             self.inputProduto.pack(side=LEFT)
 
+
             # Data e Hora de Chegada
-            self.dataHoraChegada = Label(container4, text="Data/Hora de Chegada ",font=fontePadrao)
+            self.dataHoraChegada = Label(container4, text="Data/Hora de Chegada ", font=fontePadrao)
             self.dataHoraChegada.pack(side=LEFT)
 
             self.inputDataHoraChegada = Entry(container4, textvariable=dataHoraChegada, width=20, font=fontePadrao)
             self.inputDataHoraChegada.pack(side=LEFT)
+
 
             # Data e Hora de Saída
             self.dataHoraSaida = Label(container4, text="Data/Hora de Saída ", font=fontePadrao)
@@ -202,12 +239,14 @@ class Application():
             self.inputDataHoraSaida = Entry(container4, textvariable=dataHoraSaida, width=20, font=fontePadrao)
             self.inputDataHoraSaida.pack(side=LEFT)
 
+
             # Número do CT-e
             self.numeroCTe = Label(container5, text="Número do CT-e ", font=fontePadrao)
             self.numeroCTe.pack(side=LEFT)
 
             self.inputCte = Entry(container5, textvariable=numeroCte, width=10, font=fontePadrao)
             self.inputCte.pack(side=LEFT)
+
 
             # Número da NF
             self.nf = Label(container5, text="Número da NF ", font=fontePadrao)
@@ -216,12 +255,14 @@ class Application():
             self.inputNF = Entry(container5, textvariable=numeroNF, width=10, font=fontePadrao)
             self.inputNF.pack(side=LEFT)
 
+
             # Peso da NF
             self.pesoNF = Label(container5, text="Peso da NF ", font=fontePadrao)
             self.pesoNF.pack(side=LEFT)
 
             self.inputPeso = Entry(container5, textvariable=pesoNF, width=10, font=fontePadrao)
             self.inputPeso.pack(side=LEFT)
+
 
             # Motivo da Estadia
             self.motivoEstadia = Label(container6, text="Motivo da Estadia ", font=fontePadrao)
@@ -269,5 +310,7 @@ class Application():
 
 
 root = Tk()
+root.geometry('700x285+600+200')
 Application(root)
 root.mainloop()
+
