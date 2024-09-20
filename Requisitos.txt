@@ -9,18 +9,12 @@
     * Forçar todas as letras maiúsculas
     * While para preencher os campos antes de salvar o arquivo
      - Alerta do display ao salvar o arquivo
-
+ - excessões para digitar nos campos:
+        alterar nome das transportadoras
 
 
 
                    A FAZER
- - criar opção de imprimir.
- - Reduzir duplicidade
  - mudar para oop
- - alinhar campos no display
- - excessões para digitar nos campos:
-        alterar nome das transportadoras
-
- - Opção de arrastar o PDF para selecionar
  - Organizar selfs
 
