@@ -311,6 +311,7 @@ class Application():
 
 root = Tk()
 root.geometry('700x285+600+200')
+root.resizable(False, False)
 Application(root)
 root.mainloop()
 
