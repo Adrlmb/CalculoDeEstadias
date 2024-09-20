@@ -27,7 +27,8 @@ class Application():
 
             nome = nome[0:3]
 
-            # VERIFICAR O CÓDIGO DO PRODUTO DA ROCHA CMISS E UMA PRA PODER DIFERENCIAR NO IF
+            # ROCHA UMA - CF0400000002G1
+            # ROCHA CMISS - CF0400000004G1
 
             for i in range(len(produtos)):
                 if nome in produtos[i]:
@@ -75,7 +76,7 @@ class Application():
 
         def conferenciaDeDados():
 
-            campoTransportadora = self.inputTransportadora.get().upper()
+            campoTransportadora = self.inputTransportadora.get().upper() # Transportadora
             campoNumeroNF = self.inputNF.get()  # NF
             campoProduto = self.inputProduto.get().upper()  # Produto, impor condição se for Rocha!!
             campoPesoNF = self.inputPeso.get()  # Peso NF com vírgula
