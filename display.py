@@ -20,30 +20,29 @@ class Application():
             if self.pdf:
                 return str(self.pdf).split('\u0027')[1]
 
-        def formatarProduto(nome):
-            produtos = ['ROCHA UMA', 'ROCHA CMISS', 'MICRO R P', 'KCL 00-00-58 F', 'KCL 00-00-58 GR',
-                                   'SSP 00-19-00', 'TSP 00-46-00 GR', 'MAP 11-52-00 F', 'KCL 00-00-60 GR IMP', 'CAL',
-                                   'MICRO HMoNi', 'ENXOFRE F IMP']
+        def formatarProduto(text):
+            produtos = ['ROCHA UMA', 'ROCHA CMISS', 'KCL 00-00-58 GR', 'CAL DOLO HIDRATADA', 'SSP 00-19-00',
+                        'KCL 00-00-60 GR IMP', 'MAP 11-52-00 GR', 'MICRO HMoNi', 'ENXOFRE F IMP.']
 
-            nome = nome[0:3]
+            codigoProdutos = ['CF0400000002G1', 'CF0400000004G1', 'MP2100005806G1', 'MA1100000041B1', 'PA5100190001G1',
+                              'MP2100006004G1', 'MP2111520001G1', 'MI200303090306B1', 'MP2200000001G1']
 
-            # ROCHA UMA - CF0400000002G1
-            # ROCHA CMISS - CF0400000004G1
+            referencia = text.split('\n')[9].split(' ')[1].split('-')[0]
 
             for i in range(len(produtos)):
-                if nome in produtos[i]:
+                if codigoProdutos[i] == referencia:
                     return produtos[i]
-                if nome in 'CON':
-                    return 'Escolha o tipo de rocha'
 
-        def formatarTransportadora(nome):
-            transportadoras = ['FUTURO LOGISTICA', 'G10 TRANSPORTES', 'CARVALHO TRANSPORTES', 'FRIBON TRANSPORTES', 'D\u0027GRANEL TRANSPORTES', 'SIMOES BEBEDOURO',
-                               'AGUETONI TRANSPORTES']
+        def formatarTransportadora(text):
+            transportadoras = ['MINERACAO BELOCAL', 'CARVALHO TRANSPORTES', 'FRIBON TRANSPORTES', 'FUTURO LOGISTICA',
+                               'SIMOES BEBEDOURO', 'TRANSLOPES TRANSPORTES']
 
-            nome = nome[0:3]
+            codigoTransportadoras = ['2000227172', '2000224719', '2000215499', '2000226886', '204005', '207327']
+
+            referencia = text.split('\n')[10].split('-')[0].split(' ')[1]
 
             for i in range(len(transportadoras)):
-                if nome in transportadoras[i]:
+                if codigoTransportadoras[i] == referencia:
                     return transportadoras[i]
 
         def importarPdf():
@@ -51,8 +50,8 @@ class Application():
             page = pdf.pages[0]
             text = page.extract_text()
 
-            transportadoraFormatada = formatarTransportadora(text.split('\n')[10].split('-')[1])
-            produtoFormatado = formatarProduto(text.split('\n')[9].split('-')[1])
+            transportadoraFormatada = formatarTransportadora(text)
+            produtoFormatado = formatarProduto(text)
 
             nomeTransportadora.set(transportadoraFormatada)
             nomeProduto.set(produtoFormatado)
@@ -76,7 +75,7 @@ class Application():
 
         def conferenciaDeDados():
 
-            campoTransportadora = self.inputTransportadora.get().upper() # Transportadora
+            campoTransportadora = self.inputTransportadora.get().upper()  # Transportadora
             campoNumeroNF = self.inputNF.get()  # NF
             campoProduto = self.inputProduto.get().upper()  # Produto, impor condição se for Rocha!!
             campoPesoNF = self.inputPeso.get()  # Peso NF com vírgula
@@ -190,19 +189,18 @@ class Application():
             self.inputFornecedor.focus()
             self.inputFornecedor.pack(side=LEFT)
 
-
             # Transportadora
             self.transportadora = Label(container2, text="Transportadora ", font=fontePadrao)
             self.transportadora.pack(side=LEFT)
 
-            transportadorasCadastradas = ['FUTURO', 'G10', 'CARVALHO', 'FRIBON', 'D GRANEL', 'SIMOES BEBEDOURO',
-                                          'AGUETONI']
+            transportadorasCadastradas = ['MINERACAO BELOCAL', 'CARVALHO TRANSPORTES', 'FRIBON TRANSPORTES',
+                                          'FUTURO LOGISTICA',
+                                          'SIMOES BEBEDOURO', 'TRANSLOPES TRANSPORTES']
             transportadorasCadastradas.sort()
 
             self.inputTransportadora = ttk.Combobox(container2, textvariable=nomeTransportadora,
                                                     values=transportadorasCadastradas, width=30, font=fontePadrao)
             self.inputTransportadora.pack(side=LEFT)
-
 
             # Nome do Motorista
             self.nomeMotorista = Label(container3, text="Nome do Motorista ", font=fontePadrao)
@@ -211,19 +209,16 @@ class Application():
             self.inputMotorista = Entry(container3, textvariable=nomeMotorista, width=30, font=fontePadrao)
             self.inputMotorista.pack(side=LEFT)
 
-
             # Nome do Produto
             self.produto = Label(container3, text="Produto ", font=fontePadrao)
             self.produto.pack(side=LEFT)
 
-            produtosCadastrados = ['ROCHA UMA', 'ROCHA CMISS', 'MICRO R P', 'KCL 00-00-58 F', 'KCL 00-00-58 GR',
-                                   'SSP 00-19-00', 'TSP 00-46-00 GR', 'MAP 11-52-00 F', 'KCL 00-00-60 GR IMP', 'CAL',
-                                   'MICRO HMoNi', 'ENXOFRE F IMP']
+            produtosCadastrados = ['ROCHA UMA', 'ROCHA CMISS', 'KCL 00-00-58 GR', 'CAL DOLO HIDRATADA', 'SSP 00-19-00',
+                                   'KCL 00-00-60 GR IMP', 'MAP 11-52-00 GR', 'MICRO HMoNi', 'ENXOFRE F IMP.']
             produtosCadastrados.sort()
             self.inputProduto = ttk.Combobox(container3, textvariable=nomeProduto, values=produtosCadastrados, width=30,
                                              font=fontePadrao)
             self.inputProduto.pack(side=LEFT)
-
 
             # Data e Hora de Chegada
             self.dataHoraChegada = Label(container4, text="Data/Hora de Chegada ", font=fontePadrao)
@@ -232,14 +227,12 @@ class Application():
             self.inputDataHoraChegada = Entry(container4, textvariable=dataHoraChegada, width=20, font=fontePadrao)
             self.inputDataHoraChegada.pack(side=LEFT)
 
-
             # Data e Hora de Saída
             self.dataHoraSaida = Label(container4, text="Data/Hora de Saída ", font=fontePadrao)
             self.dataHoraSaida.pack(side=LEFT)
 
             self.inputDataHoraSaida = Entry(container4, textvariable=dataHoraSaida, width=20, font=fontePadrao)
             self.inputDataHoraSaida.pack(side=LEFT)
-
 
             # Número do CT-e
             self.numeroCTe = Label(container5, text="Número do CT-e ", font=fontePadrao)
@@ -248,7 +241,6 @@ class Application():
             self.inputCte = Entry(container5, textvariable=numeroCte, width=10, font=fontePadrao)
             self.inputCte.pack(side=LEFT)
 
-
             # Número da NF
             self.nf = Label(container5, text="Número da NF ", font=fontePadrao)
             self.nf.pack(side=LEFT)
@@ -256,14 +248,12 @@ class Application():
             self.inputNF = Entry(container5, textvariable=numeroNF, width=10, font=fontePadrao)
             self.inputNF.pack(side=LEFT)
 
-
             # Peso da NF
             self.pesoNF = Label(container5, text="Peso da NF ", font=fontePadrao)
             self.pesoNF.pack(side=LEFT)
 
             self.inputPeso = Entry(container5, textvariable=pesoNF, width=10, font=fontePadrao)
             self.inputPeso.pack(side=LEFT)
-
 
             # Motivo da Estadia
             self.motivoEstadia = Label(container6, text="Motivo da Estadia ", font=fontePadrao)
@@ -315,4 +305,3 @@ root.geometry('700x285+600+200')
 root.resizable(False, False)
 Application(root)
 root.mainloop()
-
