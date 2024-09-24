@@ -8,9 +8,9 @@ class Application():
     def __init__(self, master=None):
 
         def dataDeSaida(text):
-            data = text.split('\n')[4].split(' ')[2].replace('.', '/')
-            hora = text.split('\n')[4].split(' ')[3].split(':')[0]
-            minutos = text.split('\n')[4].split(' ')[3].split(':')[1]
+            data = text.split('\n')[3].split(' ')[3].replace('.', '/')
+            hora = text.split('\n')[3].split(' ')[4].split(':')[0]
+            minutos = text.split('\n')[3].split(' ')[4].split(':')[1]
 
             return data + ' ' + hora + ':' + minutos
 
@@ -21,13 +21,13 @@ class Application():
                 return str(self.pdf).split('\u0027')[1]
 
         def formatarProduto(text):
-            produtos = ['ROCHA UMA', 'ROCHA CMISS', 'KCL 00-00-58 GR', 'CAL DOLO HIDRATADA', 'SSP 00-19-00',
+            produtos = ['ROCHA UMA', 'KCL 00-00-58 GR', 'CAL DOLO HIDRATADA', 'SSP 00-19-00',
                         'KCL 00-00-60 GR IMP', 'MAP 11-52-00 GR', 'MICRO HMoNi', 'ENXOFRE F IMP.']
 
-            codigoProdutos = ['CF0400000002G1', 'CF0400000004G1', 'MP2100005806G1', 'MA1100000041B1', 'PA5100190001G1',
-                              'MP2100006004G1', 'MP2111520001G1', 'MI200303090306B1', 'MP2200000001G1']
+            codigoProdutos = ['CF040002G1', 'MP2100005806G1', 'MA1100000432Bl', 'PA5100191231G1',
+                              'MP2100006124G1', 'MP2111520001G1', 'MI200323090306B1', 'MP2200000001G1']
 
-            referencia = text.split('\n')[9].split(' ')[1].split('-')[0]
+            referencia = text.split('\n')[8].split(' ')[1]
 
             for i in range(len(produtos)):
                 if codigoProdutos[i] == referencia:
@@ -37,9 +37,9 @@ class Application():
             transportadoras = ['MINERACAO BELOCAL', 'CARVALHO TRANSPORTES', 'FRIBON TRANSPORTES', 'FUTURO LOGISTICA',
                                'SIMOES BEBEDOURO', 'TRANSLOPES TRANSPORTES']
 
-            codigoTransportadoras = ['2000227172', '2000224719', '2000215499', '2000226886', '204005', '207327']
+            codigoTransportadoras = ['2000227564', '2000224719', '20123215499', '2000226886', '204005', '207147']
 
-            referencia = text.split('\n')[10].split('-')[0].split(' ')[1]
+            referencia = text.split('\n')[9].split(' ')[1]
 
             for i in range(len(transportadoras)):
                 if codigoTransportadoras[i] == referencia:
@@ -55,7 +55,7 @@ class Application():
 
             nomeTransportadora.set(transportadoraFormatada)
             nomeProduto.set(produtoFormatado)
-            numeroNF.set(text.split('\n')[7].split(':')[1])
+            numeroNF.set(text.split('\n')[6].split(' ')[2])
             pesoNF.set(text.split('\n')[5].split(": ")[1])
             dataHoraSaida.set(dataDeSaida(text))
 
